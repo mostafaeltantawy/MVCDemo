@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Department> ; 
+@{
+    ViewData["Title"] = "All Departments";
+}
+
+@if (@TempData["Message"] != null)
+{
+    <div id="tempMessage" class="alert  alert-success">@TempData["Message"]</div>
+
+    <script>
+        // JavaScript to hide the div after 3 seconds
+        setTimeout(function() {
+            var tempMessageDiv = document.getElementById('tempMessage');
+            if (tempMessageDiv) {
+                tempMessageDiv.style.display = 'none'; // Hide the div
+            }
+        }, 3000); // 3000 milliseconds = 3 seconds
+    </script>
+
+}
+
+
+<a asp-action="Create" class="btn btn-outline-success">Create New Department</a>
+<br />
+@if(Model.Count() > 0)
+{
+    <h1>All Departments</h1>
+    <br />
+    <table class="table table-striped  table-hover mt-3">
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(D => D.Code)</td>
+                <td>@Html.DisplayNameFor(D => D.Name)</td>
+                <td>@Html.DisplayNameFor(D => D.DateOfCreation)</td>
+                <td>Details</td>
+                <td>Update</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var department in Model)
+            {
+                <tr>
+                    <td>@department.Code</td>
+                    <td>@department.Name</td>
+                    <td>@department.DateOfCreation</td>
+                    <partial name="_ButtonsPartialView" model="@department.Id.ToString()" />
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <div class="mt-5 alert alert-warning">
+        <h3>
+            There is no departments
+        </h3>
+    </div>
+}
+
+
